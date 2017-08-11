@@ -1,0 +1,46 @@
+group 'de.lukweb'
+version '1.0.0'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+// To publish the library using Gradle we need an additionally plugin
+apply plugin: 'maven-publish'
+
+// This is just for naming the IntelliJ module
+idea {
+    module {
+        name = "GradleLibrary"
+    }
+}
+
+sourceCompatibility = 1.8
+
+publishing {
+    // Here we define what should be published
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+    // And here we set the path to the repository
+    repositories {
+        maven {
+            // Replace 'https://repository.app' with your repository url
+            url 'sftp://repository.app:22/var/repo'
+            credentials {
+                // The credentials are stored using the ~/.gradle/gradle.properties file
+                // Read more about it here: https://stackoverflow.com/a/35628079/4106848
+                username "$customRepositoryUser"
+                password "$customRepositoryPass"
+            }
+        }
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // For the library we don't need dependencies
+}

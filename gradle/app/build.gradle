@@ -1,0 +1,34 @@
+group 'de.lukweb'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'idea'
+
+// This is just for naming the IntelliJ module
+idea {
+    module {
+        name = "GradleApp"
+    }
+}
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+    // Here we add our own Maven repository
+    maven {
+        // Replace 'https://repository.app' with your repository url
+        url 'https://repository.app'
+        credentials {
+            // The credentials are stored using the ~/.gradle/gradle.properties file
+            // Read more about it here: https://stackoverflow.com/a/35628079/4106848
+            username "$customRepositoryUser"
+            password "$customRepositoryPass"
+        }
+    }
+}
+
+dependencies {
+    // Here we define the dependency which we need for this project
+    compile 'de.lukweb:helloworld-library:1.0.0'
+}
